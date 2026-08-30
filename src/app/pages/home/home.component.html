@@ -1,20 +1,46 @@
-<h2>Olympic games app</h2>
-<hr/>
-<div>
+<!--<h2>Olympic games app</h2>-->
+<!--<hr/>-->
+<!--<div>-->
+<!--  <div>-->
+<!--    <div class="center">-->
+<!--      <div>{{ titlePage }}</div>-->
+<!--    </div>-->
+<!--    <div class="split">-->
+<!--&lt;!&ndash;      <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>Number of countries</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>{{ totalCountries }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--      <div>-->
+<!--        <p>Number of JOs</p>-->
+<!--        <p>{{ totalJOs }}</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--&lt;!&ndash;  <canvas id="DashboardPieChart">{{ pieChart }}</canvas>&ndash;&gt;-->
+<!--</div>-->
+<div class="content">
   <div>
-    <div class="center">
-      <div>{{ titlePage }}</div>
-    </div>
+    <app-page-title title="Medals per Country"></app-page-title>
     <div class="split">
-      <div>
-        <p>Number of countries</p>
-        <p>{{ totalCountries }}</p>
-      </div>
-      <div>
-        <p>Number of JOs</p>
-        <p>{{ totalJOs }}</p>
-      </div>
+      <app-card label="Number of countries" [value]="totalCountries"></app-card>
+      <app-card label="Number of JOs" [value]="totalJOs"></app-card>
     </div>
   </div>
-  <canvas id="DashboardPieChart">{{ pieChart }}</canvas>
+
+  @if (error) {
+    <div class="center">
+      <p>{{ error }}</p>
+    </div>
+  }
+
+  <app-chart
+    [config]="{
+      type: 'pie',
+      labels: countries,
+      data: medalsPerCountry,
+      backgroundColor: ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d'],
+      hoverOffset: 4
+    }"
+    (sliceClick)="onCountryClick($event)">
+  </app-chart>
 </div>

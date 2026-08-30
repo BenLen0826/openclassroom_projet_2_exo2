@@ -1,3 +1,4 @@
+<!--
 <div>
   <div>
     <div class="center">
@@ -24,6 +25,42 @@
       <h2>Date</h2>
     </div>
   </div>
+  <div class="center">
+    <a routerLink="">Go back</a>
+  </div>
+</div>
+-->
+
+
+<div class="content">
+  <div>
+    <app-page-title [title]="titlePage"></app-page-title>
+    <div class="split">
+      <app-card label="Number of entries" [value]="totalEntries"></app-card>
+      <app-card label="Total Number of medals" [value]="totalMedals"></app-card>
+      <app-card label="Total Number of athletes" [value]="totalAthletes"></app-card>
+    </div>
+  </div>
+
+  @if (error) {
+    <div class="center">
+      <p>{{ error }}</p>
+    </div>
+  }
+
+  <div class="chart-container wrapper-container">
+    <div class="container">
+      <app-chart
+        [config]="{
+          type: 'line',
+          labels: years,
+          data: medalsPerYear,
+          backgroundColor: '#0b868f'
+        }">
+      </app-chart>
+    </div>
+  </div>
+
   <div class="center">
     <a routerLink="">Go back</a>
   </div>
