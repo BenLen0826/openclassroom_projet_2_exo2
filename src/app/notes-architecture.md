@@ -1,37 +1,75 @@
 Remarque générales :
 
-## Etape 1
+## Étape 1 — Analyse du code initial
 
-Structure
+### 1. Architecture et séparation des responsabilités
 
-- Ils n'y a pas de services donc les components font appels au données via HttpClient
-  depuis leur fichiers respectifs et procèdent aussi aux calculs ou filtrage des données.(ex: country.component.ts ligne 27 ou dans home.component.ts ligne 22) c'est donc un anti-patern.
+- Il n'existe aucun service : les composants (`HomeComponent`, `CountryComponent`) appellent
+  directement `HttpClient` depuis leurs propres fichiers, et effectuent eux-mêmes les calculs
+  et le filtrage des données (ex : `country.component.ts` ligne 27, `home.component.ts` ligne 22).
+  C'est un anti-pattern : l'accès aux données et la logique métier devraient être isolés du composant.
+- Il n'existe aucun modèle (`interface`/`class`) pour représenter les données : les données brutes
+  sont manipulées directement dans les composants, ce qui les rend plus volumineux et responsables
+  de bien plus que du simple affichage.
+- Absence de titre/en-tête sur la page de détail d'un pays, contrairement à ce qu'on pourrait
+  attendre d'une page cohérente avec le reste de l'application.
 
-- Le typescript n'est pas respecté car on retrouve des propriétés en "any" (ex: totalEntries de country.component.ts) et du mapping de tableau réaliser sans s'assurer du type des éléments
-- Il n'y a pas de models donc l'injection de données ce fait au sein du component au lieu que ce soit dans le service ce qui rend les fichiers encore plus volumineux
-- Présence de console.log oublié dans home.component.ts -> ligne 24 et ligne 35
-- Gestion de l'erreur est manquante : on récupère l'erreur mais on ne faire rien coté template ?
-- Pas de présence de titre/header pour la page de détails d'un pays
-- Duplication :
-  - même propriété dans homeComponent et CountryComponent : olympicUrl
-  - quasiment la même gestion de l'appel des donnée est présente dans les deux components
-  - gestion de l'erreur lors la récupération de données
-  - fonction de construction des "chart" -> faire un nouveau component ChartComponent ?
-  - affichage du titre identique dans les deux composants des pages
-- Quelques erreurs de code :
-  - pipe().subscribe(...)
-  - on accède selectedCountry.country mais on vérifie la valeur de selectedContry si on cherche à accéder partipations ?
-  - .heading présent dans style.scss mais pas utilisé (peut etre dans la librairie du chart ?)
-  - titlePage dans homeComponent est initialiser mais sert uniquement à l'affichage du titre donc on peut ce passer de la propriété
-  
+### 2. Typage TypeScript
+
+- Le typage strict n'est pas respecté : plusieurs propriétés sont typées en `any`
+  (ex : `totalEntries` dans `country.component.ts`).
+- Plusieurs opérations de `map`/`reduce` sur des tableaux sont réalisées sans typer les éléments
+  manipulés, ce qui prive le compilateur de toute vérification sur les champs utilisés.
+
+### 3. Code mort / résidus de développement
+
+- Présence de `console.log` oubliés dans `home.component.ts` (lignes 24 et 35).
+- La classe `.heading`, présente dans `styles.scss`, n'est utilisée nulle part dans le code —
+  possible résidu, ou classe destinée à un usage avec la librairie de graphique, à vérifier.
+- `titlePage` dans `HomeComponent` est initialisée mais ne sert qu'à l'affichage d'un texte fixe :
+  la propriété est superflue et le texte pourrait être écrit directement dans le template.
+
+### 4. Gestion des erreurs et des cas limites
+
+- L'erreur récupérée lors de l'appel HTTP est stockée dans une propriété du composant, mais n'est
+  jamais exploitée côté template — l'utilisateur ne voit donc jamais qu'une erreur est survenue.
+- Dans `country.component.ts`, `selectedCountry.country` est utilisé sans vérifier que
+  `selectedCountry` existe, alors que le code vérifie bien sa valeur juste après pour accéder à
+  `participations` — incohérence dans la gestion du cas où le pays n'est pas trouvé.
+
+### 5. Erreurs ou maladresses de code
+
+- Utilisation de `.pipe()` sans aucun opérateur à l'intérieur (`pipe().subscribe(...)`) — ligne
+  morte, sans effet, à supprimer.
+
+### 6. Duplication de code entre `HomeComponent` et `CountryComponent`
+
+- La même propriété `olympicUrl` est déclarée dans les deux composants.
+- La logique de récupération des données (appel HTTP, structure du `subscribe`) est quasiment
+  identique dans les deux composants.
+- La gestion de l'erreur lors de la récupération des données est dupliquée à l'identique.
+- La fonction de construction du graphique ("chart") est dupliquée avec des variations mineures
+  entre les deux composants → à extraire dans un composant dédié `ChartComponent`.
+- L'affichage du titre de page suit exactement la même structure HTML dans les deux composants
+  → candidat à l'extraction dans un composant réutilisable.
+
 ## Etape 2
 
-Les gros problèmes structurels concerne la concentration des taches/metiers/logique dans les components une séparations et une assignation des responsabilités est à réalisé.
-Les services sont eux qui doivent se charger des données
-Les modèles doivent refléter la structure des données à utiliser et devraientt être instancié que par les services
-Les components doivent maintenant faire appelle au service afin de récupérer les donnéer et directement les afficher sans faire d'action de filtrage
+### 1. Diagnostic
 
-En se basant sur la structure de olympic.json voici une structure possible:
+Les principaux problèmes structurels identifiés en Étape 1 proviennent d'une même cause :
+la concentration des tâches (accès aux données, logique métier, affichage) dans les composants,
+sans séparation des responsabilités. Une répartition claire est nécessaire :
+
+- Les **services** doivent se charger de la récupération et du traitement des données.
+- Les **modèles** doivent refléter la structure des données utilisées, et ne devraient être
+  instanciés que par les services.
+- Les **composants** doivent désormais faire appel aux services pour récupérer des données déjà
+  prêtes à l'affichage, sans effectuer eux-mêmes de filtrage ou de calcul.
+- 
+### 2. Arborescence proposée
+
+En se basant sur la structure de `olympic.json`, voici une structure possible :
 
 src/app/
 ├── components/
@@ -76,10 +114,29 @@ src/app/
 ...
 
 
-- countries.service.ts contiendra la récupération des données de olympic.json puis instancera les données dans les models country.model.ts et participation.model.ts.
-Ses méthodes reproduira la logique de filtrage que l'on retrouve dans les components countryComponent et homeComponent initiaux.
-Les nouveaux components (countryView et Home) appelerons ces méthodes directement et récupéreront une copie données filtrés selon leur besoin pour les afficher dans leur templates directement.
-- ChartComponent se chargera d'afficher un diagramme selon les données génériques transmises dans les deux pages
-- CardComponent pour afficher une donnée sous forme de carde avec un label et une valeur.
+### 3. Répartition des responsabilités
 
-## Etape 3
+#### Services
+
+- `countries.service.ts` contiendra la récupération des données depuis `olympic.json`, puis
+  instanciera les données dans les modèles `country.model.ts` et `participation.model.ts`.
+- Ses méthodes reproduiront la logique de filtrage et de calcul actuellement présente dans
+  `CountryComponent` et `HomeComponent` (nombre de médailles, nombre de pays, nombre d'éditions
+  des JO, etc.), afin que les composants n'aient plus à s'en charger.
+
+#### Composants de pages (`pages/`)
+
+- `HomeComponent` et `CountryComponent` appelleront directement les méthodes du service et
+  recevront des données déjà filtrées/calculées, prêtes à être affichées dans leurs templates.
+
+#### Composants réutilisables (`components/`)
+
+- `ChartComponent` : affichera un diagramme (pie ou line) à partir de données génériques
+  transmises par les deux pages, éliminant la duplication de la logique de construction du
+  graphique identifiée en Étape 1.
+- `CardComponent` : affichera une donnée sous forme de carte, avec un label et une valeur,
+  réutilisable pour toutes les statistiques affichées (nombre de pays, nombre de médailles, etc.).
+- `PageTitleComponent` : affichera le titre dynamique d'une page, éliminant la duplication
+  du bloc de titre identifiée en Étape 1.
+- `HeaderComponent` : affichera l'en-tête global de l'application, commun à toutes les pages.
+
