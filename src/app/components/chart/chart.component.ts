@@ -1,4 +1,12 @@
-import { Component, ElementRef, effect, input, output, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  effect,
+  EffectCleanupRegisterFn,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
 import { ChartConfig } from '../../models/chart-config';
 import Chart, { ChartEvent } from 'chart.js/auto';
 
@@ -18,7 +26,7 @@ export class ChartComponent {
 
   constructor() {
     // Reconstruit le graphique dès que la configuration (ou le canvas) change.
-    effect((onCleanup) => {
+    effect((onCleanup: EffectCleanupRegisterFn) => {
       const canvas = this.chartCanvas();
       const config = this.config();
 

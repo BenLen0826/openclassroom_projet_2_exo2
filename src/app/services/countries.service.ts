@@ -21,12 +21,14 @@ export class CountriesService {
 
     return this.http
       .get<CountryModel[]>(this.olympicUrl)
-      .pipe(tap((countries) => (this.dataCountries = countries)));
+      .pipe(tap((countries: CountryModel[]) => (this.dataCountries = countries)));
   }
 
   getCountryByName(countryName: string): Observable<CountryModel | undefined> {
     return this.getCountries().pipe(
-      map((countries) => countries.find((country) => country.country === countryName)),
+      map((countries: CountryModel[]) =>
+        countries.find((country: CountryModel) => country.country === countryName),
+      ),
     );
   }
 }

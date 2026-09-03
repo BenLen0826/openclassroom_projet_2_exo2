@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
+import { ParticipationModel } from '../../models/participation.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
 import { CardComponent } from '../../components/card/card.component';
 import { ChartComponent } from '../../components/chart/chart.component';
@@ -31,16 +32,24 @@ export class CountryComponent implements OnInit {
     () => this.country()?.participations.length ?? 0,
   );
   protected readonly totalMedals = computed<number>(
-    () => this.country()?.participations.reduce((sum, p) => sum + p.medalsCount, 0) ?? 0,
+    () =>
+      this.country()?.participations.reduce(
+        (sum: number, p: ParticipationModel) => sum + p.medalsCount,
+        0,
+      ) ?? 0,
   );
   protected readonly totalAthletes = computed<number>(
-    () => this.country()?.participations.reduce((sum, p) => sum + p.athleteCount, 0) ?? 0,
+    () =>
+      this.country()?.participations.reduce(
+        (sum: number, p: ParticipationModel) => sum + p.athleteCount,
+        0,
+      ) ?? 0,
   );
   protected readonly years = computed<string[]>(
-    () => this.country()?.participations.map((p) => p.year.toString()) ?? [],
+    () => this.country()?.participations.map((p: ParticipationModel) => p.year.toString()) ?? [],
   );
   protected readonly medalsPerYear = computed<number[]>(
-    () => this.country()?.participations.map((p) => p.medalsCount) ?? [],
+    () => this.country()?.participations.map((p: ParticipationModel) => p.medalsCount) ?? [],
   );
 
   ngOnInit(): void {
@@ -50,7 +59,7 @@ export class CountryComponent implements OnInit {
       .getCountryByName(countryName)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (country) => {
+        next: (country: CountryModel | undefined) => {
           if (!country) {
             this.router.navigate(['not-found']);
             return;
