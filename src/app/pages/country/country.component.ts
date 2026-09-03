@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
@@ -18,6 +19,7 @@ export class CountryComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dataService = inject(DataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   /** Source unique : le pays affiché. Tout le reste en dérive. */
   private readonly country = signal<CountryModel | undefined>(undefined);
@@ -44,15 +46,18 @@ export class CountryComponent implements OnInit {
   ngOnInit(): void {
     const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';
 
-    this.dataService.getCountryByName(countryName).subscribe({
-      next: (country) => {
-        if (!country) {
-          this.router.navigate(['not-found']);
-          return;
-        }
-        this.country.set(country);
-      },
-      error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
-    });
+    this.dataService
+      .getCountryByName(countryName)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (country) => {
+          if (!country) {
+            this.router.navigate(['not-found']);
+            return;
+          }
+          this.country.set(country);
+        },
+        error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
+      });
   }
 }

@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
@@ -17,6 +18,7 @@ import { ChartComponent } from '../../components/chart/chart.component';
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dataService = inject(DataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   /** Source unique : la liste brute des pays. Tout le reste en dérive. */
   private readonly countries = signal<CountryModel[]>([]);
@@ -35,10 +37,13 @@ export class HomeComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.dataService.getCountries().subscribe({
-      next: (countries) => this.countries.set(countries),
-      error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
-    });
+    this.dataService
+      .getCountries()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (countries) => this.countries.set(countries),
+        error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
+      });
   }
 
   protected onCountryClick(countryName: string): void {
