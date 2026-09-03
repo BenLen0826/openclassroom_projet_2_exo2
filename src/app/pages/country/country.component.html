@@ -1,17 +1,17 @@
 
 <div class="content">
   <div>
-    <app-page-title [title]="titlePage"></app-page-title>
+    <app-page-title [title]="titlePage()"></app-page-title>
     <div class="split">
-      <app-card label="Number of entries" [value]="totalEntries"></app-card>
-      <app-card label="Total Number of medals" [value]="totalMedals"></app-card>
-      <app-card label="Total Number of athletes" [value]="totalAthletes"></app-card>
+      <app-card label="Number of entries" [value]="totalEntries()"></app-card>
+      <app-card label="Total Number of medals" [value]="totalMedals()"></app-card>
+      <app-card label="Total Number of athletes" [value]="totalAthletes()"></app-card>
     </div>
   </div>
 
-  @if (error) {
+  @if (error()) {
     <div class="center">
-      <p>{{ error }}</p>
+      <p>{{ error() }}</p>
     </div>
   }
 
@@ -20,8 +20,8 @@
       <app-chart
         [config]="{
           type: 'line',
-          labels: years,
-          data: medalsPerYear,
+          labels: years(),
+          data: medalsPerYear(),
           backgroundColor: '#0b868f'
         }">
       </app-chart>

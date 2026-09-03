@@ -1,54 +1,31 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {CountryModel} from "../models/country.model";
-import {map, Observable, of, tap} from "rxjs";
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable, of, tap } from 'rxjs';
+import { CountryModel } from '../models/country.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CountriesService {
+  private readonly http = inject(HttpClient);
   private readonly olympicUrl = './assets/mock/olympic.json';
-  private dataCountries: CountryModel[] = [];
 
-  constructor(private readonly http: HttpClient) { }
-
+  /** Données chargées une seule fois puis mises en cache pour les vues suivantes. */
+  private dataCountries?: CountryModel[];
 
   getCountries(): Observable<CountryModel[]> {
-    if (this.dataCountries.length > 0) {
+    if (this.dataCountries) {
       return of(this.dataCountries);
     }
 
-    return this.http.get<CountryModel[]>(this.olympicUrl).pipe(
-      tap((data) => (this.dataCountries = data))
-    );
+    return this.http
+      .get<CountryModel[]>(this.olympicUrl)
+      .pipe(tap((countries) => (this.dataCountries = countries)));
   }
 
   getCountryByName(countryName: string): Observable<CountryModel | undefined> {
     return this.getCountries().pipe(
-      map((countries) => countries.find((c) => c.country === countryName))
+      map((countries) => countries.find((country) => country.country === countryName)),
     );
   }
-
-  getTotalCountries(countries: CountryModel[]): number {
-    return countries.length;
-  }
-
-  getTotalJOs(countries: CountryModel[]): number {
-    return new Set(
-      countries.flatMap((c) => c.participations.map((p) => p.year))
-    ).size;
-  }
-
-  getTotalMedalsForCountry(country: CountryModel): number {
-    return country.participations.reduce((sum, p) => sum + p.medalsCount, 0);
-  }
-
-  getTotalAthletesForCountry(country: CountryModel): number {
-    return country.participations.reduce((sum, p) => sum + p.athleteCount, 0);
-  }
-
-  getMedalsPerCountry(countries: CountryModel[]): number[] {
-    return countries.map((c) => this.getTotalMedalsForCountry(c));
-  }
-
 }

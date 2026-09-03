@@ -3,22 +3,22 @@
   <div>
     <app-page-title title="Medals per Country"></app-page-title>
     <div class="split">
-      <app-card label="Number of countries" [value]="totalCountries"></app-card>
-      <app-card label="Number of JOs" [value]="totalJOs"></app-card>
+      <app-card label="Number of countries" [value]="totalCountries()"></app-card>
+      <app-card label="Number of JOs" [value]="totalJOs()"></app-card>
     </div>
   </div>
 
-  @if (error) {
+  @if (error()) {
     <div class="center">
-      <p>{{ error }}</p>
+      <p>{{ error() }}</p>
     </div>
   }
 
   <app-chart
     [config]="{
       type: 'pie',
-      labels: countries,
-      data: medalsPerCountry,
+      labels: countryNames(),
+      data: medalsPerCountry(),
       backgroundColor: ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d'],
       hoverOffset: 4
     }"

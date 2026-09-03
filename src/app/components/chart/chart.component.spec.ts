@@ -14,6 +14,12 @@ describe('ChartComponent', () => {
 
     fixture = TestBed.createComponent(ChartComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('config', {
+      type: 'pie',
+      labels: [],
+      data: [],
+      backgroundColor: [],
+    });
     fixture.detectChanges();
   });
 

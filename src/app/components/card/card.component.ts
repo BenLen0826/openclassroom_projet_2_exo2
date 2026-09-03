@@ -1,12 +1,12 @@
-import {Component, Input} from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
   standalone: true,
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  @Input() label = '';
-  @Input() value: string | number = '';
+  readonly label = input<string>('');
+  readonly value = input<string | number>('');
 }
