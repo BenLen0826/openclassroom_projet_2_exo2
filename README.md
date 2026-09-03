@@ -1,29 +1,52 @@
-# OlympicGamesStarter
+# TéléSport — Tableau de bord des Jeux Olympiques
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+Application Angular affichant les résultats (médailles, athlètes, éditions) des
+pays aux Jeux Olympiques : une page d'accueil avec une vue d'ensemble et une page
+de détail par pays.
 
-Don't forget to install your node_modules before starting (`npm install`).
+Générée avec Angular CLI 18. Code entièrement **standalone** (aucun `NgModule`),
+état géré avec les **signaux** Angular, graphiques via **Chart.js**.
 
-## Development server
+## Prérequis
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js 18+ et npm
+- Installer les dépendances avant tout : `npm install`
 
-## Build
+## Commandes
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+| Commande | Effet |
+|----------|-------|
+| `npm start` (`ng serve`) | Serveur de dev sur `http://localhost:4200/`, rechargement automatique. |
+| `npm run build` (`ng build`) | Build de production dans `dist/`. |
+| `npm test` (`ng test`) | Tests unitaires (Karma/Jasmine). Nécessite un navigateur Chrome/Chromium. |
 
-## Where to start
+## Architecture
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+Le détail complet est dans **[`ARCHITECTURE.md`](ARCHITECTURE.md)** ; l'analyse du
+code de départ et les choix de refonte sont dans
+[`src/app/notes-architecture.md`](src/app/notes-architecture.md).
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+En résumé, sous `src/app/` :
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+- **`components/`** — composants présentationnels réutilisables (`header`,
+  `page-title`, `card`, `chart`). Entrées/sorties via `input()` / `output()`,
+  aucune injection de service.
+- **`pages/`** — composants routés (`home`, `country`, `not-found`) déclarés dans
+  `app.routes.ts` ; ils injectent le service, portent l'état en signaux et
+  dérivent l'affichage via `computed`.
+- **`services/`** — `data.service.ts` : point d'accès unique aux données, méthodes
+  `getCountries()` / `getCountryByName()` renvoyant des `Observable`.
+  `countries.service.ts` est conservé comme variante `HttpClient` (non branchée).
+- **`models/`** — interfaces TypeScript : `CountryModel`, `ParticipationModel`,
+  `ChartConfig`.
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+Démarrage : `main.ts` → `bootstrapApplication(AppComponent, appConfig)` ;
+providers dans `app.config.ts` (`provideRouter`, `provideHttpClient`).
 
-You're now ready to implement the requested features.
+## Données
 
-Good luck!
+Le service actif (`DataService`) sert un jeu de données statique embarqué (issu de
+`src/assets/mock/olympic.json`). L'URL de la source est externalisée dans
+`src/environments/environment.ts` (`olympicUrl`), utilisée par
+`countries.service.ts` qui reflete le service actif via un fonctionnement utilisant une api : pointer vers une véritable API ne demande que de changer
+cette valeur et de reproduire le fonctionnement de `countries.service.ts` , sans toucher aux composants.
