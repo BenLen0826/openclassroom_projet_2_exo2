@@ -1,9 +1,6 @@
 
 <div class="content">
-  <div>
-    <app-page-title title="Medals per Country"></app-page-title>
-    <app-stat-list [stats]="stats()"></app-stat-list>
-  </div>
+  <app-page-header title="Medals per Country" [stats]="stats()"></app-page-header>
 
   @if (error()) {
     <div class="center">
