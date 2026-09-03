@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {ChartConfig} from "../../models/chart-config";
 import Chart, {ChartEvent} from "chart.js/auto";
 
@@ -8,13 +8,14 @@ import Chart, {ChartEvent} from "chart.js/auto";
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
-export class ChartComponent {
+export class ChartComponent implements OnChanges {
   @Input() config!: ChartConfig;
-  @Output() sliceClick = new EventEmitter<string>();
+  @Output() readonly sliceClick = new EventEmitter<string>();
 
-  @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartCanvas', { static: true })
+  private readonly chartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  private chart!: Chart;
+  private chart?: Chart;
 
   ngOnChanges(): void {
     if (this.config?.labels.length && this.config?.data.length) {
@@ -40,13 +41,13 @@ export class ChartComponent {
       },
       options: {
         aspectRatio: 2.5,
-        onClick: (event) => this.handleClick(event)
+        onClick: (event: ChartEvent) => this.handleClick(event)
       }
     });
   }
 
   private handleClick(event: ChartEvent): void {
-    if (!event.native) {
+    if (!this.chart || !event.native) {
       return;
     }
     const points = this.chart.getElementsAtEventForMode(event.native, 'point', { intersect: true }, true);

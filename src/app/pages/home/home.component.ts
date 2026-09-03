@@ -16,15 +16,17 @@ import {ChartComponent} from "../../components/chart/chart.component";
 })
 export class HomeComponent implements OnInit {
 
+  protected totalCountries = 0;
+  protected totalJOs = 0;
+  protected error = '';
 
-  public totalCountries = 0;
-  public totalJOs = 0;
-  public error = '';
+  protected countries: string[] = [];
+  protected medalsPerCountry: number[] = [];
 
-  public countries: string[] = [];
-  public medalsPerCountry: number[] = [];
-
-  constructor(private router: Router, private countriesService: CountriesService) {}
+  constructor(
+    private readonly router: Router,
+    private readonly countriesService: CountriesService,
+  ) {}
 
   ngOnInit(): void {
     this.countriesService.getCountries().subscribe({
@@ -43,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.medalsPerCountry = this.countriesService.getMedalsPerCountry(data);
   }
 
-  onCountryClick(countryName: string): void {
+  protected onCountryClick(countryName: string): void {
     this.router.navigate(['country', countryName]);
   }
 }

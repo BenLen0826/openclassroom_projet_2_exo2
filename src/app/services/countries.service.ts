@@ -7,10 +7,10 @@ import {map, Observable, of, tap} from "rxjs";
   providedIn: 'root'
 })
 export class CountriesService {
-  private olympicUrl = './assets/mock/olympic.json';
+  private readonly olympicUrl = './assets/mock/olympic.json';
   private dataCountries: CountryModel[] = [];
 
-  constructor(private http:HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
 
   getCountries(): Observable<CountryModel[]> {

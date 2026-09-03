@@ -17,16 +17,20 @@ import {ChartComponent} from "../../components/chart/chart.component";
 })
 export class CountryComponent implements OnInit {
 
-  public titlePage = '';
-  public totalEntries = 0;
-  public totalMedals = 0;
-  public totalAthletes = 0;
-  public error = '';
+  protected titlePage = '';
+  protected totalEntries = 0;
+  protected totalMedals = 0;
+  protected totalAthletes = 0;
+  protected error = '';
 
-  public years: string[] = [];
-  public medalsPerYear: number[] = [];
+  protected years: string[] = [];
+  protected medalsPerYear: number[] = [];
 
-  constructor(private route: ActivatedRoute, private countriesService: CountriesService, private router: Router) {}
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly countriesService: CountriesService,
+    private readonly router: Router,
+  ) {}
 
   ngOnInit(): void {
     const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';
