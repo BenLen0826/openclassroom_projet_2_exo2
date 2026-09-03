@@ -1,4 +1,4 @@
-.card {
+.stat-card {
   padding: 10px;
   border: solid #0b868f 1px;
   border-radius: 10px;
@@ -16,7 +16,7 @@
   }
 }
 @media screen and (max-width: 37.5rem) {
-  .card {
+  .stat-card {
     width: 80%;
   }
 }

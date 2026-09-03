@@ -5,13 +5,13 @@ import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
-import { CardComponent } from '../../components/card/card.component';
+import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PageTitleComponent, CardComponent, ChartComponent],
+  imports: [PageTitleComponent, StatCardComponent, ChartComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

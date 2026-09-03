@@ -5,14 +5,14 @@ import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
-import { CardComponent } from '../../components/card/card.component';
+import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-country',
   standalone: true,
   // Composants/directives utilisés dans le template (auparavant via `AppModule`).
-  imports: [RouterLink, PageTitleComponent, CardComponent, ChartComponent],
+  imports: [RouterLink, PageTitleComponent, StatCardComponent, ChartComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
 })
