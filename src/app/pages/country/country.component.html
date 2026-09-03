@@ -2,11 +2,7 @@
 <div class="content">
   <div>
     <app-page-title [title]="titlePage()"></app-page-title>
-    <div class="split">
-      <app-stat-card label="Number of entries" [value]="totalEntries()"></app-stat-card>
-      <app-stat-card label="Total Number of medals" [value]="totalMedals()"></app-stat-card>
-      <app-stat-card label="Total Number of athletes" [value]="totalAthletes()"></app-stat-card>
-    </div>
+    <app-stat-list [stats]="stats()"></app-stat-list>
   </div>
 
   @if (error()) {

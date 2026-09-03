@@ -4,15 +4,16 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
+import { StatModel } from '../../models/stat.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
-import { StatCardComponent } from '../../components/stat-card/stat-card.component';
+import { StatListComponent } from '../../components/stat-list/stat-list.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-country',
   standalone: true,
   // Composants/directives utilisés dans le template (auparavant via `AppModule`).
-  imports: [RouterLink, PageTitleComponent, StatCardComponent, ChartComponent],
+  imports: [RouterLink, PageTitleComponent, StatListComponent, ChartComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
 })
@@ -51,6 +52,12 @@ export class CountryComponent implements OnInit {
   protected readonly medalsPerYear = computed<number[]>(
     () => this.country()?.participations.map((p: ParticipationModel) => p.medalsCount) ?? [],
   );
+
+  protected readonly stats = computed<StatModel[]>(() => [
+    { label: 'Number of entries', value: this.totalEntries() },
+    { label: 'Total Number of medals', value: this.totalMedals() },
+    { label: 'Total Number of athletes', value: this.totalAthletes() },
+  ]);
 
   ngOnInit(): void {
     const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';

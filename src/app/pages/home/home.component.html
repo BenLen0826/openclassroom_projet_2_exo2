@@ -2,10 +2,7 @@
 <div class="content">
   <div>
     <app-page-title title="Medals per Country"></app-page-title>
-    <div class="split">
-      <app-stat-card label="Number of countries" [value]="totalCountries()"></app-stat-card>
-      <app-stat-card label="Number of JOs" [value]="totalJOs()"></app-stat-card>
-    </div>
+    <app-stat-list [stats]="stats()"></app-stat-list>
   </div>
 
   @if (error()) {

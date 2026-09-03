@@ -4,14 +4,15 @@ import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
+import { StatModel } from '../../models/stat.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
-import { StatCardComponent } from '../../components/stat-card/stat-card.component';
+import { StatListComponent } from '../../components/stat-list/stat-list.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PageTitleComponent, StatCardComponent, ChartComponent],
+  imports: [PageTitleComponent, StatListComponent, ChartComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -42,6 +43,11 @@ export class HomeComponent implements OnInit {
       c.participations.reduce((sum: number, p: ParticipationModel) => sum + p.medalsCount, 0),
     ),
   );
+
+  protected readonly stats = computed<StatModel[]>(() => [
+    { label: 'Number of countries', value: this.totalCountries() },
+    { label: 'Number of JOs', value: this.totalJOs() },
+  ]);
 
   ngOnInit(): void {
     this.dataService
