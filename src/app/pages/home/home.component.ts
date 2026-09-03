@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { CountriesService } from '../../services/countries.service';
+import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
 import { CardComponent } from '../../components/card/card.component';
@@ -16,7 +16,7 @@ import { ChartComponent } from '../../components/chart/chart.component';
 })
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly countriesService = inject(CountriesService);
+  private readonly dataService = inject(DataService);
 
   /** Source unique : la liste brute des pays. Tout le reste en dérive. */
   private readonly countries = signal<CountryModel[]>([]);
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.countriesService.getCountries().subscribe({
+    this.dataService.getCountries().subscribe({
       next: (countries) => this.countries.set(countries),
       error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
     });

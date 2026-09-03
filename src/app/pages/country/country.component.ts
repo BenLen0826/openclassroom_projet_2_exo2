@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CountriesService } from '../../services/countries.service';
+import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { PageTitleComponent } from '../../components/page-title/page-title.component';
 import { CardComponent } from '../../components/card/card.component';
@@ -17,7 +17,7 @@ import { ChartComponent } from '../../components/chart/chart.component';
 export class CountryComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly countriesService = inject(CountriesService);
+  private readonly dataService = inject(DataService);
 
   /** Source unique : le pays affiché. Tout le reste en dérive. */
   private readonly country = signal<CountryModel | undefined>(undefined);
@@ -44,7 +44,7 @@ export class CountryComponent implements OnInit {
   ngOnInit(): void {
     const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';
 
-    this.countriesService.getCountryByName(countryName).subscribe({
+    this.dataService.getCountryByName(countryName).subscribe({
       next: (country) => {
         if (!country) {
           this.router.navigate(['not-found']);
