@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { CountryModel } from '../models/country.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CountriesService {
   private readonly http = inject(HttpClient);
-  private readonly olympicUrl = './assets/mock/olympic.json';
+  private readonly olympicUrl = environment.olympicUrl;
 
   /** Données chargées une seule fois puis mises en cache pour les vues suivantes. */
   private dataCountries?: CountryModel[];
