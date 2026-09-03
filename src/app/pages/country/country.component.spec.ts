@@ -9,7 +9,7 @@ describe('DetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CountryComponent ]
+      imports: [ CountryComponent ]
     })
     .compileComponents();
 

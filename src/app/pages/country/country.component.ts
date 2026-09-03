@@ -1,11 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CountriesService} from "../../services/countries.service";
 import {CountryModel} from "../../models/country.model";
+import {PageTitleComponent} from "../../components/page-title/page-title.component";
+import {CardComponent} from "../../components/card/card.component";
+import {ChartComponent} from "../../components/chart/chart.component";
 
 
 @Component({
   selector: 'app-country',
+  standalone: true,
+  // Composants/directives utilisés dans le template (auparavant via `AppModule`).
+  imports: [RouterLink, PageTitleComponent, CardComponent, ChartComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
