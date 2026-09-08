@@ -44,8 +44,8 @@ export class HomeComponent implements OnInit {
   );
 
   protected readonly stats = computed<StatModel[]>(() => [
-    { label: 'Number of countries', value: this.totalCountries() },
     { label: 'Number of JOs', value: this.totalJOs() },
+    { label: 'Number of countries', value: this.totalCountries() },
   ]);
 
   ngOnInit(): void {

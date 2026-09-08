@@ -56,8 +56,8 @@ export class CountryComponent implements OnInit {
 
   protected readonly stats = computed<StatModel[]>(() => [
     { label: 'Number of entries', value: this.totalEntries() },
-    { label: 'Total Number of medals', value: this.totalMedals() },
-    { label: 'Total Number of athletes', value: this.totalAthletes() },
+    { label: 'Total number of medals', value: this.totalMedals() },
+    { label: 'Total number of athletes', value: this.totalAthletes() },
   ]);
 
   ngOnInit(): void {
