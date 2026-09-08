@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { CountryModel } from '../models/country.model';
 import { environment } from '../../environments/environment';
 
@@ -19,8 +19,11 @@ export class DataService {
       return of(this.dataCountries);
     }
 
-    return this.http
-      .get<CountryModel[]>(this.olympicUrl)
-      .pipe(tap((countries: CountryModel[]) => (this.dataCountries = countries)));
+    return this.http.get<CountryModel[]>(this.olympicUrl).pipe(
+      map((countries: CountryModel[]) =>
+        [...countries].sort((a, b) => a.country.localeCompare(b.country)),
+      ),
+      tap((countries: CountryModel[]) => (this.dataCountries = countries)),
+    );
   }
 }
