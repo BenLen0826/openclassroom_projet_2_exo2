@@ -54,7 +54,8 @@ export class ChartComponent {
         ],
       },
       options: {
-        aspectRatio: 2.5,
+        responsive: true,
+        maintainAspectRatio: false,
         onClick: (event: ChartEvent) => this.handleClick(event),
       },
     });
