@@ -72,7 +72,7 @@ export class CountryComponent implements OnInit {
           }
           this.country.set(country);
         },
-        error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
+        error: () => this.error.set('Aucune donnée'),
       });
   }
 }

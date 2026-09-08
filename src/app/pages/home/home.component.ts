@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (countries: CountryModel[]) => this.countries.set(countries),
-        error: () => this.error.set('Une erreur est survenue lors du chargement des données.'),
+        error: () => this.error.set('Aucune donnée'),
       });
   }
 
