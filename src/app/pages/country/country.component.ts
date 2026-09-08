@@ -1,5 +1,6 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
@@ -62,8 +63,13 @@ export class CountryComponent implements OnInit {
     const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';
 
     this.dataService
-      .getCountryByName(countryName)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .getCountries()
+      .pipe(
+        map((countries: CountryModel[]) =>
+          countries.find((country: CountryModel) => country.country === countryName),
+        ),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe({
         next: (country: CountryModel | undefined) => {
           if (!country) {
