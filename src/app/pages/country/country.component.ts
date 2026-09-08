@@ -1,19 +1,20 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
 import { StatModel } from '../../models/stat.model';
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { ChartComponent } from '../../components/chart/chart.component';
+import { BackButtonComponent } from '../../components/back-button/back-button.component';
 
 @Component({
   selector: 'app-country',
   standalone: true,
   // Composants/directives utilisés dans le template (auparavant via `AppModule`).
-  imports: [RouterLink, PageHeaderComponent, ChartComponent],
+  imports: [PageHeaderComponent, ChartComponent, BackButtonComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
 })

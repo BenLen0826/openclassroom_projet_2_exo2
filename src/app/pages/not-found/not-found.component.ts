@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { BackButtonComponent } from '../../components/back-button/back-button.component';
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [RouterLink],
+  imports: [BackButtonComponent],
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss']
 })
