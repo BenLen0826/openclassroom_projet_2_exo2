@@ -1,9 +1,9 @@
 .stat-card {
-  padding: 10px;
-  border: solid #0b868f 1px;
-  border-radius: 10px;
+  padding: 0.625rem;
+  border: solid #0b868f 0.0625rem;
+  border-radius: 0.625rem;
   color: gray;
-  margin: 0px;
+  margin: 0;
 
   p {
     text-align: center;
@@ -15,8 +15,12 @@
     color: black;
   }
 }
-@media screen and (max-width: 37.5rem) {
+
+@media screen and (max-width: 74.9375rem) {
   .stat-card {
-    width: 80%;
+    padding: 0.3125rem 0.5rem;
+    p {
+      font-size: smaller;
+    }
   }
 }

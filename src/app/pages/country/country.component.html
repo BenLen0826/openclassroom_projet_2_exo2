@@ -8,18 +8,14 @@
     </div>
   }
 
-  <div class="chart-container wrapper-container">
-    <div class="container">
-      <app-chart
-        [config]="{
-          type: 'line',
-          labels: years(),
-          data: medalsPerYear(),
-          backgroundColor: '#0b868f'
-        }">
-      </app-chart>
-    </div>
-  </div>
+  <app-chart
+    [config]="{
+      type: 'line',
+      labels: years(),
+      data: medalsPerYear(),
+      backgroundColor: '#0b868f'
+    }">
+  </app-chart>
 
   <div class="center">
     <a routerLink="">Go back</a>

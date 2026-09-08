@@ -1,30 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+
 .heading {
-    flex-direction: column;
+  flex-direction: column;
 }
 
-.content{
+.content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
+  max-width: 75rem; /* 1200px */
+  margin-inline: auto;
+  padding: 1rem;
+}
+
+.content > * {
+  min-width: 0;
+}
+
+@media screen and (min-width: 75rem) {
+  .content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .content > app-page-header {
+    flex: 1 1 20rem;
+    gap: 3rem;
+  }
+
+  .content > app-chart {
+    flex: 2 1 30rem;
+  }
+
+  .content > .center {
+    flex-basis: 100%;
+  }
 }
 
 .center {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
+  display: flex;
+  justify-content: center;
+  margin: 0.3125rem;
 
-    div {
-        background: #0b868f;
-        padding: 10px;
-        border-radius: 10px;
-        color: white;
-    }
-}
-
-@media screen and (max-width: 37.5rem) {
-  .content{
-    gap: 0.25rem;
+  div {
+    background: #0b868f;
+    padding: 0.625rem;
+    border-radius: 0.625rem;
+    color: white;
   }
 }
