@@ -14,11 +14,11 @@ Générée avec Angular CLI 18. Code entièrement **standalone** (aucun `NgModul
 
 ## Commandes
 
-| Commande | Effet |
-|----------|-------|
-| `npm start` (`ng serve`) | Serveur de dev sur `http://localhost:4200/`, rechargement automatique. |
-| `npm run build` (`ng build`) | Build de production dans `dist/`. |
-| `npm test` (`ng test`) | Tests unitaires (Karma/Jasmine). Nécessite un navigateur Chrome/Chromium. |
+| Commande | Effet                                                                                                 |
+|----------|-------------------------------------------------------------------------------------------------------|
+| `npm start` (`ng serve`) | Serveur de dev sur `http://localhost:4200/`, rechargement automatique.                                |
+| `npm run build` (`ng build`) | Build de production dans `dist/`.                                                                     |
+| `npm test` (`ng test`) | Tests unitaires (Karma/Jasmine). Nécessite un navigateur Chrome/Chromium (non requis pour ce projet). |
 
 ## Architecture
 
@@ -29,24 +29,35 @@ code de départ et les choix de refonte sont dans
 En résumé, sous `src/app/` :
 
 - **`components/`** — composants présentationnels réutilisables (`header`,
-  `page-title`, `card`, `chart`). Entrées/sorties via `input()` / `output()`,
-  aucune injection de service.
+  `page-header`, `stat-card`, `stat-list`, `chart`, `back-button`).
+  Entrées/sorties via `input()` / `output()`, aucune injection de service.
 - **`pages/`** — composants routés (`home`, `country`, `not-found`) déclarés dans
   `app.routes.ts` ; ils injectent le service, portent l'état en signaux et
   dérivent l'affichage via `computed`.
-- **`services/`** — `data.service.ts` : point d'accès unique aux données, méthodes
-  `getCountries()` / `getCountryByName()` renvoyant des `Observable`.
-  `countries.service.ts` est conservé comme variante `HttpClient` (non branchée).
+- **`services/`** — `data.service.ts` : point d'accès unique aux données. Méthode
+  `getCountries()` renvoyant un `Observable<CountryModel[]>`, avec mise en cache
+  après le premier chargement et tri par nom de pays. La page `country` filtre le
+  pays voulu à partir de ce tableau.
 - **`models/`** — interfaces TypeScript : `CountryModel`, `ParticipationModel`,
-  `ChartConfig`.
+  `ChartConfig`, `StatModel`.
+
+Routes (`app.routes.ts`) : `''` → `home`, `country/:countryName` → `country`,
+`not-found` et `**` → `not-found`.
 
 Démarrage : `main.ts` → `bootstrapApplication(AppComponent, appConfig)` ;
 providers dans `app.config.ts` (`provideRouter`, `provideHttpClient`).
 
+## Accessibilité
+
+Contrastes AA, focus visibles, `aria-label` sur les boutons/icônes et
+descriptions textuelles associées aux graphiques. Le contrôle de retour est
+factorisé dans le composant `back-button` (rendu comme un lien routé, stylé en
+bouton).
+
 ## Données
 
-Le service actif (`DataService`) sert un jeu de données statique embarqué (issu de
-`src/assets/mock/olympic.json`). L'URL de la source est externalisée dans
-`src/environments/environment.ts` (`olympicUrl`), utilisée par
-`countries.service.ts` qui reflete le service actif via un fonctionnement utilisant une api : pointer vers une véritable API ne demande que de changer
-cette valeur et de reproduire le fonctionnement de `countries.service.ts` , sans toucher aux composants.
+`DataService` charge un jeu de données statique via `HttpClient` depuis
+`src/assets/mock/olympic.json`. L'URL de la source est externalisée dans
+`src/environments/environment.ts` (`olympicUrl`) : pointer vers une véritable API
+ne demande que de changer cette valeur, sans toucher aux composants ni au
+service.
