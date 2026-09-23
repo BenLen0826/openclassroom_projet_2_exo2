@@ -54,6 +54,9 @@ src/
         └── chart-config.ts        # ChartConfig (contrat d'entrée de ChartComponent)
 ```
 
+(situé dans src/shematisation_architecture.drawio)
+![img.png](img.png)
+
 Chaque dossier de composant contient `.ts` / `.html` / `.scss` (+ `.spec.ts`, non
 exécuté ici faute de navigateur ; validation par `ng build`).
 
@@ -108,26 +111,3 @@ La sélection d'un pays précis n'est pas dans le service : `CountryComponent`
 filtre lui-même la liste (`map` + `find` sur le nom). Le retour est typé
 **`Observable`** (et non un tableau nu) : choix volontaire qui absorbe la latence
 réseau d'une future API.
-
-## Préparation à une connexion back-end / API
-
-Le service consomme déjà `HttpClient` sur une URL externalisée : passer à une API
-réelle **ne modifie qu'un fichier**, voire aucune ligne de code.
-
-1. **Le contrat est l'interface du service, pas la source.** Les composants
-   appellent `getCountries()` et s'abonnent au résultat. L'appel HTTP est déjà en
-   place ; il n'y a rien à réécrire côté composants.
-2. **Le type `Observable` absorbe déjà la latence réseau.** Les pages gèrent
-   l'asynchrone de bout en bout : `subscribe`, signal `error` affiché dans le
-   template (`@if (error())`), désabonnement via `takeUntilDestroyed`.
-3. **Les modèles figent la forme des données.** `CountryModel` /
-   `ParticipationModel` servent de schéma attendu de l'API. Si la réponse diffère,
-   l'adaptation se fait dans le service via un `map()`, sans impact sur les composants.
-4. **L'infrastructure HTTP est déjà en place.** `provideHttpClient()` est
-   enregistré dans `app.config.ts` ; une base URL, des intercepteurs
-   (authentification, gestion d'erreurs centralisée) s'ajoutent ici, de façon
-   transversale. Un cache mémoire simple est déjà présent dans `getCountries()`.
-5. **L'URL de la source est déjà externalisée.** `environment.ts` /
-   `environment.prod.ts` exposent `olympicUrl` (aujourd'hui
-   `./assets/mock/olympic.json`). Pointer vers une API réelle = changer cette
-   seule valeur par environnement (dev vs prod).

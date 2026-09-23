@@ -1,0 +1,209 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="archi" name="Architecture Angular">
+    <mxGraphModel dx="2054" dy="1081" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=22;fontStyle=1;align=left;verticalAlign=middle;" value="Architecture (src/)" vertex="1">
+          <mxGeometry height="40" width="600" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="grpBoot" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#FAFAFA;strokeColor=#666666;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#333333;" value="app/" vertex="1">
+          <mxGeometry height="680" width="1460" x="20" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="grpPages" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#F4FAF2;strokeColor=#82b366;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#2E5E1E;" value="pages/" vertex="1">
+          <mxGeometry height="160" width="960" x="40" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="grpComp" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#F3F7FC;strokeColor=#6c8ebf;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#23466E;" value="components/&amp;nbsp;" vertex="1">
+          <mxGeometry height="300" width="960" x="40" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="grpData" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#FFFBEF;strokeColor=#d6b656;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#7A5C00;" value="environments/ &amp; assets/" vertex="1">
+          <mxGeometry height="90" width="550" x="920" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="grpServ" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#FFF7EE;strokeColor=#d79b00;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#8A5A00;" value="services/" vertex="1">
+          <mxGeometry height="160" width="400" x="1060" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="grpModels" parent="1" style="rounded=1;arcSize=4;html=1;dashed=1;fillColor=#F8F4FA;strokeColor=#9673a6;verticalAlign=top;align=left;spacingLeft=10;fontStyle=1;fontColor=#5B3F6B;" value="models/" vertex="1">
+          <mxGeometry height="300" width="400" x="1060" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="appcomp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;app.component.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;&amp;lt;app-header&amp;gt; + &amp;lt;router-outlet&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="80" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="appconfig" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;app.config.ts&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="380" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="approutes" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;app.routes.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;table de routage des pages&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="700" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="home" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;b&gt;home/&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;tableau de bord :&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="80" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="country" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;b&gt;country/&lt;/b&gt;&lt;div&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;page détails:&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="380" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="notfound" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;b&gt;not-found/&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;page 404&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="700" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;header/&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="80" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="pageheader" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;page-header/&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="300" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="chart" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;chart/&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;wrapper Chart.js&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="540" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="backbtn" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;back-button/&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="780" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="statlist" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;stat-list/&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="300" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="statcard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;stat-card/&lt;/b&gt;&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="600" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="env" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;environments/&lt;/b&gt;" vertex="1">
+          <mxGeometry height="35" width="260" x="940" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="mock" parent="1" style="shape=note;size=14;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;assets/mock/olympic.json&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="230" x="1230" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dataservice" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;b&gt;data.service.ts&lt;/b&gt;" vertex="1">
+          <mxGeometry height="80" width="320" x="1100" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="mCountry" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;country.model.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;CountryModel&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="1080" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="mPart" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;participation.model.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;ParticipationModel&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="1280" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="mStat" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;stat.model.ts&lt;/b&gt; — &lt;font style=&quot;font-size:10px&quot;&gt;StatModel&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="360" x="1080" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="mChart" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;chart-config.ts&lt;/b&gt; — &lt;font style=&quot;font-size:10px&quot;&gt;ChartConfig&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="360" x="1080" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="appconfig" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#FAFAFA;" target="approutes" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="appcomp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" target="header" value="&amp;lt;app-header&amp;gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="240" />
+              <mxPoint x="60" y="625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="approutes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#82b366;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" target="home">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="740" y="310" />
+              <mxPoint x="190" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" source="approutes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#82b366;exitX=0.35;exitY=1;entryX=0.5;entryY=0;" target="country">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="1" source="approutes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#82b366;exitX=0.6;exitY=1;entryX=0.5;entryY=0;" target="notfound">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;exitX=0.6;exitY=1;entryX=0.2;entryY=0;" target="pageheader">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="212" y="530" />
+              <mxPoint x="340" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;startArrow=oval;startFill=0;strokeColor=#6c8ebf;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=0.9;exitY=1;entryX=0.2;entryY=0;" target="chart" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="278" y="520" />
+              <mxPoint x="580" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p3" edge="1" parent="1" source="country" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;exitX=0.2;exitY=1;entryX=0.8;entryY=0;" target="pageheader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" edge="1" parent="1" source="country" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;exitX=0.6;exitY=1;entryX=0.6;entryY=0;" target="chart">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="512" y="510" />
+              <mxPoint x="660" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" edge="1" parent="1" source="country" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;exitX=0.9;exitY=1;entryX=0.2;entryY=0;" target="backbtn">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="578" y="500" />
+              <mxPoint x="820" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p6" edge="1" parent="1" source="notfound" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;exitX=0.7;exitY=1;entryX=0.7;entryY=0;" target="backbtn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" edge="1" parent="1" source="pageheader" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#F3F7FC;" target="statlist" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" edge="1" parent="1" source="statlist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#F3F7FC;" target="statcard" value="">
+          <mxGeometry relative="1" x="-0.2" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d1" edge="1" parent="1" source="grpPages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="dataservice" value="inject(DataService)">
+          <mxGeometry relative="1" x="-0.4" y="10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2" edge="1" parent="1" source="dataservice" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="mock" value="HttpClient.get()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" edge="1" parent="1" source="dataservice" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#d6b656;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" target="env" value="olympicUrl">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="155" />
+              <mxPoint x="1080" y="155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d4" edge="1" parent="1" source="dataservice" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#9673a6;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" target="mCountry" value="Observable&amp;lt;CountryModel[]&amp;gt;">
+          <mxGeometry relative="1" x="0.0023" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d5" edge="1" parent="1" source="mPart" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=diamondThin;endFill=0;startArrow=none;dashed=0;strokeColor=#9673a6;fontSize=10;labelBackgroundColor=#F8F4FA;" target="mCountry" value="participations[]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" edge="1" parent="1" source="grpComp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#9673a6;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.55;entryX=0;entryY=0.5;" target="mStat" value="page-header · stat-list · stat-card">
+          <mxGeometry relative="1" x="-0.2222" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1000" y="710" />
+              <mxPoint x="1080" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d7" edge="1" parent="1" source="grpComp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#9673a6;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.817;entryX=0;entryY=0.5;" target="mChart" value="chart">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;fontSize=11;fillColor=#FFFFFF;strokeColor=#999999;" value="&lt;b&gt;Légende&lt;/b&gt;&lt;br&gt;━━▶ &amp;nbsp;utilise / injecte / affiche dans son template&lt;br&gt;┅┅▶ &amp;nbsp;typé par (modèle) / configuration&lt;br&gt;&lt;font color=&quot;#82b366&quot;&gt;■&lt;/font&gt;&amp;nbsp;cpt routés&amp;nbsp; &amp;nbsp;&lt;font color=&quot;#6c8ebf&quot;&gt;■ &lt;/font&gt;cpt réutilisables&amp;nbsp;&lt;font color=&quot;#d79b00&quot;&gt;■&lt;/font&gt; services&amp;nbsp; &amp;nbsp;&lt;font color=&quot;#9673a6&quot;&gt;■&lt;/font&gt; modèles&amp;nbsp; &amp;nbsp;&lt;font color=&quot;#d6b656&quot;&gt;■&lt;/font&gt; config / données" vertex="1">
+          <mxGeometry height="80" width="420" x="460" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="WyCMVXYnWTV5cvBX55a1-2" edge="1" parent="1" source="env" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#d6b656;fontSize=10;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="mock" value="">
+          <mxGeometry relative="1" x="-0.2299" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1210" y="122.52" />
+              <mxPoint x="1210" y="120" />
+            </Array>
+            <mxPoint x="1450" y="427" as="sourcePoint" />
+            <mxPoint x="1340" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
