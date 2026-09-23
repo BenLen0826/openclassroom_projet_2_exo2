@@ -1,62 +1,39 @@
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
-import { StatModel } from '../../models/stat.model';
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PageHeaderComponent, ChartComponent],
+  imports: [AsyncPipe, PageHeaderComponent, ChartComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private readonly router = inject(Router);
   private readonly dataService = inject(DataService);
-  private readonly destroyRef = inject(DestroyRef);
 
-  /** Source unique : la liste brute des pays. Tout le reste en dérive. */
-  private readonly countries = signal<CountryModel[]>([]);
-
-  protected readonly error = signal<string>('');
-
-  protected readonly countryNames = computed<string[]>(() =>
-    this.countries().map((c: CountryModel) => c.country),
+  protected readonly countries$ = this.dataService.getCountries().pipe(
+    map((countries: CountryModel[]) => ({
+      countryNames: countries.map((c: CountryModel) => c.country),
+      medalsPerCountry: countries.map((c: CountryModel) =>
+        c.participations.reduce((sum: number, p: ParticipationModel) => sum + p.medalsCount, 0),
+      ),
+      stats: [
+        {
+          label: 'Number of JOs',
+          value: new Set(countries.flatMap((c) => c.participations.map((p) => p.year))).size,
+        },
+        { label: 'Number of countries', value: countries.length },
+      ],
+    })),
   );
-  protected readonly totalCountries = computed<number>(() => this.countries().length);
-  protected readonly totalJOs = computed<number>(
-    () =>
-      new Set(
-        this.countries().flatMap((c: CountryModel) =>
-          c.participations.map((p: ParticipationModel) => p.year),
-        ),
-      ).size,
-  );
-  protected readonly medalsPerCountry = computed<number[]>(() =>
-    this.countries().map((c: CountryModel) =>
-      c.participations.reduce((sum: number, p: ParticipationModel) => sum + p.medalsCount, 0),
-    ),
-  );
-
-  protected readonly stats = computed<StatModel[]>(() => [
-    { label: 'Number of JOs', value: this.totalJOs() },
-    { label: 'Number of countries', value: this.totalCountries() },
-  ]);
-
-  ngOnInit(): void {
-    this.dataService
-      .getCountries()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (countries: CountryModel[]) => this.countries.set(countries),
-        error: () => this.error.set('Aucune donnée'),
-      });
-  }
 
   protected onCountryClick(countryName: string): void {
     this.router.navigate(['country', countryName]);

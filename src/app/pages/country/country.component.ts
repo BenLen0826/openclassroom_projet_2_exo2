@@ -1,11 +1,10 @@
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { CountryModel } from '../../models/country.model';
 import { ParticipationModel } from '../../models/participation.model';
-import { StatModel } from '../../models/stat.model';
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { ChartComponent } from '../../components/chart/chart.component';
 import { BackButtonComponent } from '../../components/back-button/back-button.component';
@@ -14,72 +13,47 @@ import { BackButtonComponent } from '../../components/back-button/back-button.co
   selector: 'app-country',
   standalone: true,
   // Composants/directives utilisés dans le template (auparavant via `AppModule`).
-  imports: [PageHeaderComponent, ChartComponent, BackButtonComponent],
+  imports: [AsyncPipe, PageHeaderComponent, ChartComponent, BackButtonComponent],
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
 })
-export class CountryComponent implements OnInit {
+export class CountryComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dataService = inject(DataService);
-  private readonly destroyRef = inject(DestroyRef);
 
-  /** Source unique : le pays affiché. Tout le reste en dérive. */
-  private readonly country = signal<CountryModel | undefined>(undefined);
+  protected readonly country$ = this.dataService.getCountries().pipe(
+    map((countries: CountryModel[]) => {
+      const countryName = this.route.snapshot.paramMap.get('countryName');
+      const country = countries.find((c: CountryModel) => c.country === countryName);
 
-  protected readonly error = signal<string>('');
+      if (!country) {
+        this.router.navigate(['not-found']);
+        return null;
+      }
 
-  protected readonly titlePage = computed<string>(() => this.country()?.country ?? '');
-  protected readonly totalEntries = computed<number>(
-    () => this.country()?.participations.length ?? 0,
+      return {
+        titlePage: country.country,
+        years: country.participations.map((p: ParticipationModel) => p.year.toString()),
+        medalsPerYear: country.participations.map((p: ParticipationModel) => p.medalsCount),
+        stats: [
+          { label: 'Number of entries', value: country.participations.length },
+          {
+            label: 'Total number of medals',
+            value: country.participations.reduce(
+              (sum: number, p: ParticipationModel) => sum + p.medalsCount,
+              0,
+            ),
+          },
+          {
+            label: 'Total number of athletes',
+            value: country.participations.reduce(
+              (sum: number, p: ParticipationModel) => sum + p.athleteCount,
+              0,
+            ),
+          },
+        ],
+      };
+    }),
   );
-  protected readonly totalMedals = computed<number>(
-    () =>
-      this.country()?.participations.reduce(
-        (sum: number, p: ParticipationModel) => sum + p.medalsCount,
-        0,
-      ) ?? 0,
-  );
-  protected readonly totalAthletes = computed<number>(
-    () =>
-      this.country()?.participations.reduce(
-        (sum: number, p: ParticipationModel) => sum + p.athleteCount,
-        0,
-      ) ?? 0,
-  );
-  protected readonly years = computed<string[]>(
-    () => this.country()?.participations.map((p: ParticipationModel) => p.year.toString()) ?? [],
-  );
-  protected readonly medalsPerYear = computed<number[]>(
-    () => this.country()?.participations.map((p: ParticipationModel) => p.medalsCount) ?? [],
-  );
-
-  protected readonly stats = computed<StatModel[]>(() => [
-    { label: 'Number of entries', value: this.totalEntries() },
-    { label: 'Total number of medals', value: this.totalMedals() },
-    { label: 'Total number of athletes', value: this.totalAthletes() },
-  ]);
-
-  ngOnInit(): void {
-    const countryName = this.route.snapshot.paramMap.get('countryName') ?? '';
-
-    this.dataService
-      .getCountries()
-      .pipe(
-        map((countries: CountryModel[]) =>
-          countries.find((country: CountryModel) => country.country === countryName),
-        ),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe({
-        next: (country: CountryModel | undefined) => {
-          if (!country) {
-            this.router.navigate(['not-found']);
-            return;
-          }
-          this.country.set(country);
-        },
-        error: () => this.error.set('Aucune donnée'),
-      });
-  }
 }

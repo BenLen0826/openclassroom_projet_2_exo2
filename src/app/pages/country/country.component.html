@@ -1,21 +1,17 @@
 
 <div class="content">
-  <app-page-header [title]="titlePage()" [stats]="stats()"></app-page-header>
+  @if (country$ | async; as country) {
+    <app-page-header [title]="country.titlePage" [stats]="country.stats"></app-page-header>
 
-  @if (error()) {
-    <div class="center">
-      <p>{{ error() }}</p>
-    </div>
+    <app-chart
+      [config]="{
+        type: 'line',
+        labels: country.years,
+        data: country.medalsPerYear,
+        backgroundColor: '#0b868f'
+      }">
+    </app-chart>
   }
-
-  <app-chart
-    [config]="{
-      type: 'line',
-      labels: years(),
-      data: medalsPerYear(),
-      backgroundColor: '#0b868f'
-    }">
-  </app-chart>
 
   <div class="center">
     <app-back-button
